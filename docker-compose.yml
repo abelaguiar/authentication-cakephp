@@ -1,0 +1,22 @@
+version: '2'
+
+services:
+
+  app:
+    build:
+      context: ./containers/app
+    volumes:
+     - .:/var/www/html
+    ports:
+      - 8080:80
+    depends_on:
+      - database
+
+  database:
+    image: postgres:9
+    environment:
+      - POSTGRES_USER=blog
+      - POSTGRES_PASSWORD=blog2019
+      - POSTGRES_DB=blog
+    volumes:
+      - ./../../data/blog/postgresql/data:/var/lib/postgresql/data
