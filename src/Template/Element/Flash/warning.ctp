@@ -4,6 +4,6 @@
     }
 ?>
 
-<div class="alert alert-success" onclick="this.classList.add('hidden')">
+<div class="alert alert-warning" onclick="this.classList.add('hidden')">
     <?= $message ?>
 </div>

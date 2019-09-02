@@ -32,9 +32,18 @@ class UsersController extends AppController
 
                 return $this->redirect($this->Auth->redirectUrl());
             }
+
+            $this->Flash->warning("Não Autorizado! Você não tem um usuário válido.");
         }
 
         $this->render('/Auth/login');
+    }
+
+    public function logout()
+    {
+        $this->Flash->success("Sucesso! Você está desconectado agora.");
+
+        return $this->redirect($this->Auth->logout());
     }
 
     /**

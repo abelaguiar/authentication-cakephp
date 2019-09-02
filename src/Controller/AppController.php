@@ -7,6 +7,18 @@ use Cake\Controller\Controller;
 
 class AppController extends Controller
 {
+    public function beforeRender(Event $event)
+    {
+        if (!array_key_exists('_serialize', $this->viewVars) &&
+            in_array($this->response->type(), ['application/json', 'application/xml'])    
+        ) {
+
+            $this->set('_serialize', true);
+        }
+
+        $this->set('auth', $this->request->session()->read('Auth'));
+    }
+
     public function initialize()
     {
         parent::initialize();
@@ -17,6 +29,7 @@ class AppController extends Controller
         $this->loadComponent('Auth', [
             'authorize' => 'Controller',
             'loginAction' => ['controller' => 'Users', 'action' => 'login'],
+            'logoutRedirect' => ['controller' => 'Users', 'action' => 'login'],
             'authenticate' => [
                 'Form' => [
                     'fields' => ['username' => 'email', 'password' => 'password']
@@ -25,11 +38,9 @@ class AppController extends Controller
             'storage' => 'Session'
         ]);
 
-        //$this->loadComponent('Security');
-
         if ($this->Auth->user()) {
 
-             $this->viewBuilder()->setLayout('default');
+            $this->viewBuilder()->setLayout('default');
 
         } else {
 
@@ -45,10 +56,10 @@ class AppController extends Controller
             return true;
         }
 
-        // Only admins can access admin functions
-        //if ($this->request->getParam('prefix') === 'admin') {
-        //    return (bool)($user['role'] === 'admin');
-        //}
+        //Only admins can access admin functions
+        // if ($this->request->getParam('prefix') === 'admin') {
+        //     return (bool)($user['role'] === 'admin');
+        // }
 
         return false;
     }
