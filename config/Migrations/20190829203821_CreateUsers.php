@@ -32,6 +32,16 @@ class CreateUsers extends AbstractMigration
             'null' => false,
         ]);
 
+        $table->addColumn('role_id', 'integer', [
+            'default' => null,
+            'limit' => 11,
+            'null' => false,
+        ])
+        ->addIndex(['role_id'])
+        ->addForeignKey('role_id', 'roles', ['id'], 
+            ['delete' => 'SET_NULL', 'update' => 'NO_ACTION']
+        );
+
         $table->addColumn('created', 'datetime', [
             'default' => null,
             'null' => false,
