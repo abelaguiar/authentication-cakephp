@@ -1,3 +1,5 @@
+<?php $this->assign('pageTitle', 'Posts'); ?>
+
 <div class="card border-left-primary">
     <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
         <h6 class="m-0 font-weight-bold text-primary">
