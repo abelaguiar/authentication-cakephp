@@ -20,12 +20,6 @@ class CreatePosts extends AbstractMigration
             'null' => false,
         ]);
 
-        $table->addColumn('image', 'string', [
-            'default' => null,
-            'limit' => 255,
-            'null' => false,
-        ]);
-
         $table->addColumn('category_id', 'integer', [
             'default' => null,
             'limit' => 11,
@@ -43,12 +37,12 @@ class CreatePosts extends AbstractMigration
 
         $table->addColumn('created', 'datetime', [
             'default' => null,
-            'null' => false,
+            'null' => false
         ]);
 
         $table->addColumn('modified', 'datetime', [
             'default' => null,
-            'null' => false,
+            'null' => false
         ]);
 
         $table->create();

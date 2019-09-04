@@ -38,12 +38,6 @@ class PostsTable extends Table
             ->notEmptyString('title');
 
         $validator
-            ->scalar('image')
-            ->maxLength('image', 255)
-            ->requirePresence('image', 'create')
-            ->notEmptyFile('image');
-
-        $validator
             ->scalar('content')
             ->requirePresence('content', 'create')
             ->notEmptyString('content');

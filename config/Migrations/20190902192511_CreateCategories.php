@@ -23,13 +23,12 @@ class CreateCategories extends AbstractMigration
 
         $table->addColumn('created', 'datetime', [
             'default' => null,
-            'null' => false,
+            'null' => false
         ]);
 
-        $table->addColumn('midified', 'string', [
+        $table->addColumn('modified', 'datetime', [
             'default' => null,
-            'limit' => 255,
-            'null' => false,
+            'null' => false
         ]);
 
         $table->create();

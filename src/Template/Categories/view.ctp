@@ -1,71 +1,54 @@
-<?php
-/**
- * @var \App\View\AppView $this
- * @var \App\Model\Entity\Category $category
- */
-?>
-<nav class="large-3 medium-4 columns" id="actions-sidebar">
-    <ul class="side-nav">
-        <li class="heading"><?= __('Actions') ?></li>
-        <li><?= $this->Html->link(__('Edit Category'), ['action' => 'edit', $category->id]) ?> </li>
-        <li><?= $this->Form->postLink(__('Delete Category'), ['action' => 'delete', $category->id], ['confirm' => __('Are you sure you want to delete # {0}?', $category->id)]) ?> </li>
-        <li><?= $this->Html->link(__('List Categories'), ['action' => 'index']) ?> </li>
-        <li><?= $this->Html->link(__('New Category'), ['action' => 'add']) ?> </li>
-        <li><?= $this->Html->link(__('List Posts'), ['controller' => 'Posts', 'action' => 'index']) ?> </li>
-        <li><?= $this->Html->link(__('New Post'), ['controller' => 'Posts', 'action' => 'add']) ?> </li>
-    </ul>
-</nav>
-<div class="categories view large-9 medium-8 columns content">
-    <h3><?= h($category->name) ?></h3>
-    <table class="vertical-table">
-        <tr>
-            <th scope="row"><?= __('Name') ?></th>
-            <td><?= h($category->name) ?></td>
-        </tr>
-        <tr>
-            <th scope="row"><?= __('Midified') ?></th>
-            <td><?= h($category->midified) ?></td>
-        </tr>
-        <tr>
-            <th scope="row"><?= __('Id') ?></th>
-            <td><?= $this->Number->format($category->id) ?></td>
-        </tr>
-        <tr>
-            <th scope="row"><?= __('Created') ?></th>
-            <td><?= h($category->created) ?></td>
-        </tr>
-    </table>
-    <div class="related">
-        <h4><?= __('Related Posts') ?></h4>
-        <?php if (!empty($category->posts)): ?>
-        <table cellpadding="0" cellspacing="0">
+<div class="card border-left-primary">
+    <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+        <h6 class="m-0 font-weight-bold text-primary">
+            Ver Categoria
+        </h6>
+        <div class="dropdown no-arrow">
+            <?= $this->Html->link(__('Voltar'), ['action' => 'index']); ?>
+        </div>
+    </div>
+    <div class="categories view large-9 medium-8 columns content">
+        <table class="table vertical-table">
             <tr>
-                <th scope="col"><?= __('Id') ?></th>
-                <th scope="col"><?= __('Title') ?></th>
-                <th scope="col"><?= __('Image') ?></th>
-                <th scope="col"><?= __('Category Id') ?></th>
-                <th scope="col"><?= __('Content') ?></th>
-                <th scope="col"><?= __('Created') ?></th>
-                <th scope="col"><?= __('Modified') ?></th>
-                <th scope="col" class="actions"><?= __('Actions') ?></th>
+                <th scope="row">Nome</th>
+                <td><?= h($category->name); ?></td>
+            </tr>
+            <tr>
+                <th scope="row">Criado</th>
+                <td><?= h($category->created->format('d/m/Y')); ?></td>
+            </tr>
+            <tr>
+                <th scope="row">Alterado</th>
+                <td><?= h($category->modified->format('d/m/Y')); ?></td>
+            </tr>
+        </table>
+    </div>
+</div>
+
+<div class="card mt-3 border-left-primary">
+    <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+        <h6 class="m-0 font-weight-bold text-primary">
+            Posts Atrelados
+        </h6>
+    </div>
+    <?php if (!empty($category->posts)): ?>
+        <table class="table" cellpadding="0" cellspacing="0">
+            <tr>
+                <th scope="col">Título</th>
+                <th scope="col">Criado</th>
+                <th scope="col" class="actions">Ações</th>
             </tr>
             <?php foreach ($category->posts as $posts): ?>
             <tr>
-                <td><?= h($posts->id) ?></td>
-                <td><?= h($posts->title) ?></td>
-                <td><?= h($posts->image) ?></td>
-                <td><?= h($posts->category_id) ?></td>
-                <td><?= h($posts->content) ?></td>
-                <td><?= h($posts->created) ?></td>
-                <td><?= h($posts->modified) ?></td>
+                <td><?= h($posts->title); ?></td>
+                <td><?= h($posts->created->format('d/m/Y')); ?></td>
                 <td class="actions">
-                    <?= $this->Html->link(__('View'), ['controller' => 'Posts', 'action' => 'view', $posts->id]) ?>
-                    <?= $this->Html->link(__('Edit'), ['controller' => 'Posts', 'action' => 'edit', $posts->id]) ?>
-                    <?= $this->Form->postLink(__('Delete'), ['controller' => 'Posts', 'action' => 'delete', $posts->id], ['confirm' => __('Are you sure you want to delete # {0}?', $posts->id)]) ?>
+                    <?= $this->Html->link(__('Ver'), ['controller' => 'Posts', 'action' => 'view', $posts->id]); ?> | 
+                    <?= $this->Html->link(__('Editar'), ['controller' => 'Posts', 'action' => 'edit', $posts->id]); ?> | 
+                    <?= $this->Form->postLink(__('Excluir'), ['controller' => 'Posts', 'action' => 'delete', $posts->id], ['confirm' => __('Are you sure you want to delete # {0}?', $posts->id)]); ?>
                 </td>
             </tr>
             <?php endforeach; ?>
         </table>
-        <?php endif; ?>
-    </div>
+    <?php endif; ?>
 </div>

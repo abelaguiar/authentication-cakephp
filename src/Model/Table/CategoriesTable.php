@@ -36,12 +36,6 @@ class CategoriesTable extends Table
             ->requirePresence('name', 'create')
             ->notEmptyString('name');
 
-        $validator
-            ->scalar('midified')
-            ->maxLength('midified', 255)
-            ->requirePresence('midified', 'create')
-            ->notEmptyString('midified');
-
         return $validator;
     }
 }

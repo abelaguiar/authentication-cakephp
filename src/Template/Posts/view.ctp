@@ -1,50 +1,34 @@
-<?php
-/**
- * @var \App\View\AppView $this
- * @var \App\Model\Entity\Post $post
- */
-?>
-<nav class="large-3 medium-4 columns" id="actions-sidebar">
-    <ul class="side-nav">
-        <li class="heading"><?= __('Actions') ?></li>
-        <li><?= $this->Html->link(__('Edit Post'), ['action' => 'edit', $post->id]) ?> </li>
-        <li><?= $this->Form->postLink(__('Delete Post'), ['action' => 'delete', $post->id], ['confirm' => __('Are you sure you want to delete # {0}?', $post->id)]) ?> </li>
-        <li><?= $this->Html->link(__('List Posts'), ['action' => 'index']) ?> </li>
-        <li><?= $this->Html->link(__('New Post'), ['action' => 'add']) ?> </li>
-        <li><?= $this->Html->link(__('List Categories'), ['controller' => 'Categories', 'action' => 'index']) ?> </li>
-        <li><?= $this->Html->link(__('New Category'), ['controller' => 'Categories', 'action' => 'add']) ?> </li>
-    </ul>
-</nav>
-<div class="posts view large-9 medium-8 columns content">
-    <h3><?= h($post->title) ?></h3>
-    <table class="vertical-table">
-        <tr>
-            <th scope="row"><?= __('Title') ?></th>
-            <td><?= h($post->title) ?></td>
-        </tr>
-        <tr>
-            <th scope="row"><?= __('Image') ?></th>
-            <td><?= h($post->image) ?></td>
-        </tr>
-        <tr>
-            <th scope="row"><?= __('Category') ?></th>
-            <td><?= $post->has('category') ? $this->Html->link($post->category->name, ['controller' => 'Categories', 'action' => 'view', $post->category->id]) : '' ?></td>
-        </tr>
-        <tr>
-            <th scope="row"><?= __('Id') ?></th>
-            <td><?= $this->Number->format($post->id) ?></td>
-        </tr>
-        <tr>
-            <th scope="row"><?= __('Created') ?></th>
-            <td><?= h($post->created) ?></td>
-        </tr>
-        <tr>
-            <th scope="row"><?= __('Modified') ?></th>
-            <td><?= h($post->modified) ?></td>
-        </tr>
-    </table>
-    <div class="row">
-        <h4><?= __('Content') ?></h4>
-        <?= $this->Text->autoParagraph(h($post->content)); ?>
+<div class="card border-left-primary">
+    <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+        <h6 class="m-0 font-weight-bold text-primary">
+            Ver Post
+        </h6>
+        <div class="dropdown no-arrow">
+            <?= $this->Html->link(__('Voltar'), ['action' => 'index']); ?>
+        </div>
+    </div>
+    <div class="posts view large-9 medium-8 columns content">
+        <table class="table vertical-table">
+            <tr>
+                <th scope="row">Título</th>
+                <td><?= h($post->title) ?></td>
+            </tr>
+            <tr>
+                <th scope="row">Categoria</th>
+                <td><?= $post->has('category') ? $this->Html->link($post->category->name, ['controller' => 'Categories', 'action' => 'view', $post->category->id]) : '' ?></td>
+            </tr>
+            <tr>
+                <th scope="row">Criado</th>
+                <td><?= h($post->created->format('d/m/Y')) ?></td>
+            </tr>
+            <tr>
+                <th scope="row">Alterado</th>
+                <td><?= h($post->modified->format('d/m/Y')) ?></td>
+            </tr>
+        </table>
+        <div class="row-flow ml-2">
+            <h4>Conteúdo</h4>
+            <?= $this->Text->autoParagraph(h($post->content)); ?>
+        </div>
     </div>
 </div>

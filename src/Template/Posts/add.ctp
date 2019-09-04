@@ -1,28 +1,38 @@
-<?php
-/**
- * @var \App\View\AppView $this
- * @var \App\Model\Entity\Post $post
- */
-?>
-<nav class="large-3 medium-4 columns" id="actions-sidebar">
-    <ul class="side-nav">
-        <li class="heading"><?= __('Actions') ?></li>
-        <li><?= $this->Html->link(__('List Posts'), ['action' => 'index']) ?></li>
-        <li><?= $this->Html->link(__('List Categories'), ['controller' => 'Categories', 'action' => 'index']) ?></li>
-        <li><?= $this->Html->link(__('New Category'), ['controller' => 'Categories', 'action' => 'add']) ?></li>
-    </ul>
-</nav>
-<div class="posts form large-9 medium-8 columns content">
-    <?= $this->Form->create($post) ?>
-    <fieldset>
-        <legend><?= __('Add Post') ?></legend>
-        <?php
-            echo $this->Form->control('title');
-            echo $this->Form->control('image');
-            echo $this->Form->control('category_id', ['options' => $categories]);
-            echo $this->Form->control('content');
-        ?>
-    </fieldset>
-    <?= $this->Form->button(__('Submit')) ?>
-    <?= $this->Form->end() ?>
+<div class="card border-left-primary">
+    <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+        <h6 class="m-0 font-weight-bold text-primary">
+            Cadastrar Post
+        </h6>
+        <span class="pull-right">
+            <?= $this->Html->link(__('Voltar'), ['action' => 'index']); ?>
+        </span>
+    </div>
+    <?= $this->Form->create($post, ['enctype' => 'multipart/form-data']); ?>
+        <div class="card-body">
+            <div class="row">
+                <div class="col-8">
+                    <div class="form-group">
+                        <?= $this->Form->control('title', ['class' => 'form-control', 'label' => 'Título']); ?>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-3">
+                    <div class="form-group">
+                        <?= $this->Form->control('category_id', ['class' => 'form-control', 'options' => $categories, 'label' => 'Categoria']); ?>
+                    </div>
+                </div>
+                <div class="col-9">
+                    <div class="form-group">
+                        <?= $this->Form->control('content', ['class' => 'form-control', 'label' => 'Conteúdo']); ?>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="card-footer">
+            <button type="submit" class="btn btn-primary">
+                <i class="fa fa-save"></i> Cadastrar
+            </button>
+        </div>
+    <?= $this->Form->end(); ?>
 </div>

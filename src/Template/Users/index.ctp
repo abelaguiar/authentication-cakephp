@@ -1,20 +1,20 @@
-<div class="card border-bottom-primary">
-    <div class="card-header">
+<div class="card border-left-primary">
+    <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
         <h6 class="m-0 font-weight-bold text-primary">
             Lista de Usuários
         </h6>
-        <span class="pull-right">
-            <?= $this->Html->link(__('New User'), ['action' => 'add']); ?>
-        </span>
+        <div class="dropdown no-arrow">
+            <?= $this->Html->link(__('Cadastrar'), ['action' => 'add']); ?>
+        </div>
     </div>
     <table class="table">
         <thead>
             <tr>
-                <th scope="col"><?= $this->Paginator->sort('name'); ?></th>
+                <th scope="col"><?= $this->Paginator->sort('name', 'Name'); ?></th>
                 <th scope="col"><?= $this->Paginator->sort('email'); ?></th>
-                <th scope="col"><?= $this->Paginator->sort('created'); ?></th>
-                <th scope="col"><?= $this->Paginator->sort('modified'); ?></th>
-                <th scope="col" class="actions"><?= __('Actions'); ?></th>
+                <th scope="col"><?= $this->Paginator->sort('created', 'Criado'); ?></th>
+                <th scope="col"><?= $this->Paginator->sort('modified', 'Alterado'); ?></th>
+                <th scope="col" class="actions"><?= __('Ações'); ?></th>
             </tr>
         </thead>
         <tbody>
@@ -22,11 +22,11 @@
                 <tr>
                     <td><?= h($user->name); ?></td>
                     <td><?= h($user->email); ?></td>
-                    <td><?= h($user->created); ?></td>
-                    <td><?= h($user->modified); ?></td>
+                    <td><?= h($user->created->format('d/m/Y')); ?></td>
+                    <td><?= h($user->modified->format('d/m/Y')); ?></td>
                     <td class="actions">
-                        <?= $this->Html->link(__('Edit'), ['action' => 'edit', $user->id]); ?> | 
-                        <?= $this->Form->postLink(__('Delete'), ['action' => 'delete', $user->id], ['confirm' => __('Are you sure you want to delete # {0}?', $user->id)]); ?>
+                        <?= $this->Html->link(__('Editar'), ['action' => 'edit', $user->id]); ?> | 
+                        <?= $this->Form->postLink(__('Excluir'), ['action' => 'delete', $user->id], ['confirm' => __('Are you sure you want to delete # {0}?', $user->id)]); ?>
                     </td>
                 </tr>
             <?php endforeach; ?>
@@ -34,13 +34,11 @@
     </table>
 </div>
 
-<div class="paginator">
+<div class="py-3 d-flex flex-row align-items-center justify-content-between">
     <ul class="pagination">
-        <?= $this->Paginator->first('<< ' . __('first')); ?>
-        <?= $this->Paginator->prev('< ' . __('previous')); ?>
-        <?= $this->Paginator->numbers(); ?>
-        <?= $this->Paginator->next(__('next') . ' >'); ?>
-        <?= $this->Paginator->last(__('last') . ' >>'); ?>
+        <?= $this->Paginator->prev('&laquo; Anterior', ['escape' => false]); ?>
+        <?= $this->Paginator->numbers(['escape' => false]); ?>
+        <?= $this->Paginator->next('Próximo &raquo;', ['escape' => false, 'class' => 'disabled']); ?>
     </ul>
-    <p><?= $this->Paginator->counter(['format' => __('Page {{page}} of {{pages}}, showing {{current}} record(s) out of {{count}} total')]); ?></p>
+    <p><?= $this->Paginator->counter('Página {{page}} de {{pages}} | Total de Registros: {{count}}'); ?></p>
 </div>

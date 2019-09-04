@@ -11,12 +11,13 @@ class PostsController extends AppController
         $this->paginate = [
             'contain' => ['Categories']
         ];
+
         $posts = $this->paginate($this->Posts);
 
         $this->set(compact('posts'));
     }
 
-    public function view($id = null)
+    public function view($id)
     {
         $post = $this->Posts->get($id, [
             'contain' => ['Categories']
@@ -40,7 +41,7 @@ class PostsController extends AppController
                 return $this->redirect(['action' => 'index']);
             }
 
-            $this->Flash->error(__('The post could not be saved. Please, try again.'));
+            $this->Flash->error("O post não pode ser salvo.");
         }
 
         $categories = $this->Posts->Categories->find('list', ['limit' => 200]);
@@ -48,7 +49,7 @@ class PostsController extends AppController
         $this->set(compact('post', 'categories'));
     }
 
-    public function edit($id = null)
+    public function edit($id)
     {
         $post = $this->Posts->get($id);
 
@@ -71,7 +72,7 @@ class PostsController extends AppController
         $this->set(compact('post', 'categories'));
     }
 
-    public function delete($id = null)
+    public function delete($id)
     {
         $this->request->allowMethod(['post', 'delete']);
 
@@ -79,11 +80,11 @@ class PostsController extends AppController
 
         if ($this->Posts->delete($post)) {
 
-            $this->Flash->success(__('The post has been deleted.'));
+            $this->Flash->success(__('O post foi deletado.'));
 
         } else {
 
-            $this->Flash->error(__('The post could not be deleted. Please, try again.'));
+            $this->Flash->error(__('O post não pode ser deletado.'));
         }
 
         return $this->redirect(['action' => 'index']);

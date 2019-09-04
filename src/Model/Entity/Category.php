@@ -9,7 +9,7 @@ class Category extends Entity
     protected $_accessible = [
         'name' => true,
         'created' => true,
-        'midified' => true,
+        'modified' => true,
         'posts' => true
     ];
 }
