@@ -18,6 +18,11 @@ class UsersTable extends Table
         $this->setPrimaryKey('id');
 
         $this->addBehavior('Timestamp');
+
+        $this->belongsTo('Role', [
+            'foreignKey' => 'role_id',
+            'joinType' => 'INNER'
+        ]);
     }
 
     public function validationDefault(Validator $validator)
@@ -49,6 +54,7 @@ class UsersTable extends Table
     public function buildRules(RulesChecker $rules)
     {
         $rules->add($rules->isUnique(['email']));
+        $rules->add($rules->existsIn(['role_id'], 'Roles'));
 
         return $rules;
     }
