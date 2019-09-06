@@ -1,57 +1,85 @@
-<?php
-/**
- * @var \App\View\AppView $this
- * @var \App\Model\Entity\Permission[]|\Cake\Collection\CollectionInterface $permissions
- */
-?>
-<nav class="large-3 medium-4 columns" id="actions-sidebar">
-    <ul class="side-nav">
-        <li class="heading"><?= __('Actions') ?></li>
-        <li><?= $this->Html->link(__('New Permission'), ['action' => 'add']) ?></li>
-        <li><?= $this->Html->link(__('List Role Permission'), ['controller' => 'RolePermission', 'action' => 'index']) ?></li>
-        <li><?= $this->Html->link(__('New Role Permission'), ['controller' => 'RolePermission', 'action' => 'add']) ?></li>
-        <li><?= $this->Html->link(__('List User Permission'), ['controller' => 'UserPermission', 'action' => 'index']) ?></li>
-        <li><?= $this->Html->link(__('New User Permission'), ['controller' => 'UserPermission', 'action' => 'add']) ?></li>
-    </ul>
-</nav>
-<div class="permissions index large-9 medium-8 columns content">
-    <h3><?= __('Permissions') ?></h3>
-    <table cellpadding="0" cellspacing="0">
-        <thead>
-            <tr>
-                <th scope="col"><?= $this->Paginator->sort('id') ?></th>
-                <th scope="col"><?= $this->Paginator->sort('name') ?></th>
-                <th scope="col"><?= $this->Paginator->sort('slug') ?></th>
-                <th scope="col"><?= $this->Paginator->sort('created') ?></th>
-                <th scope="col"><?= $this->Paginator->sort('modified') ?></th>
-                <th scope="col" class="actions"><?= __('Actions') ?></th>
-            </tr>
-        </thead>
-        <tbody>
-            <?php foreach ($permissions as $permission): ?>
-            <tr>
-                <td><?= $this->Number->format($permission->id) ?></td>
-                <td><?= h($permission->name) ?></td>
-                <td><?= h($permission->slug) ?></td>
-                <td><?= h($permission->created) ?></td>
-                <td><?= h($permission->modified) ?></td>
-                <td class="actions">
-                    <?= $this->Html->link(__('View'), ['action' => 'view', $permission->id]) ?>
-                    <?= $this->Html->link(__('Edit'), ['action' => 'edit', $permission->id]) ?>
-                    <?= $this->Form->postLink(__('Delete'), ['action' => 'delete', $permission->id], ['confirm' => __('Are you sure you want to delete # {0}?', $permission->id)]) ?>
-                </td>
-            </tr>
-            <?php endforeach; ?>
-        </tbody>
-    </table>
-    <div class="paginator">
-        <ul class="pagination">
-            <?= $this->Paginator->first('<< ' . __('first')) ?>
-            <?= $this->Paginator->prev('< ' . __('previous')) ?>
-            <?= $this->Paginator->numbers() ?>
-            <?= $this->Paginator->next(__('next') . ' >') ?>
-            <?= $this->Paginator->last(__('last') . ' >>') ?>
-        </ul>
-        <p><?= $this->Paginator->counter(['format' => __('Page {{page}} of {{pages}}, showing {{current}} record(s) out of {{count}} total')]) ?></p>
+<?php $this->assign('pageTitle', 'Permissões do Grupo: ' . $role->name); ?>
+
+<div class="card border-left-primary">
+    <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+        <h6 class="m-0 font-weight-bold text-primary">
+            Adicionar Permissões
+        </h6>
+        <span class="pull-right">
+            <?= $this->Html->link(__('Voltar'), ['controller' => '', 'action' => 'index']); ?>
+        </span>
+    </div>
+    <div class="card-body">
+        <div class="alert alert-primary">
+            <i class="fa fa-info-circle"></i> Cada bloco de menu tem uma lista de itens.
+            <p>
+                <b>Obs:</b> 
+                Para tirar ou colocar permissões de um grupo, 
+                selecione os checkboxs que deseja aplicar a permissão, 
+                após isso, aperte em adicionar permissão, para assim aplicar as permissões.
+            </p>
+        </div>
+        <?= $this->Form->create(null) ?>
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="card shadow mb-4">
+                        <a href="#post" class="d-block card-header py-3 collapsed" data-toggle="collapse" role="button" aria-expanded="false" aria-controls="post">
+                            <h6 class="m-0 font-weight-bold text-primary">Posts</h6>
+                        </a>
+                        <div class="collapse" id="post" style="">
+                            <div class="card-body">
+                                <?php foreach ($groupsPermission['posts'] as $permission): ?>
+                                    <div class="form-check">
+                                        <input 
+                                            name="permissions[]" 
+                                            class="form-check-input" 
+                                            type="checkbox" 
+                                            value="<?= $permission->id; ?>" 
+                                            id="check-<?= $permission->id; ?>"
+                                            <?= in_array($permission->id, $permissionAssigned) ? 'checked' : ''; ?>
+                                        >
+                                        <label class="form-check-label" for="check-<?= $permission->id; ?>">
+                                            <?= $permission->name; ?>
+                                        </label>
+                                    </div>
+                                <?php endforeach; ?>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="card shadow mb-4">
+                        <a href="#category" class="d-block card-header py-3 collapsed" data-toggle="collapse" role="button" aria-expanded="false" aria-controls="category">
+                            <h6 class="m-0 font-weight-bold text-primary">Categorias</h6>
+                        </a>
+                        <div class="collapse" id="category" style="">
+                            <div class="card-body">
+                                <?php foreach ($groupsPermission['categories'] as $permission): ?>
+                                    <div class="form-check">
+                                        <input 
+                                            name="permissions[]" 
+                                            class="form-check-input" 
+                                            type="checkbox" 
+                                            value="<?= $permission->id; ?>" 
+                                            id="check-<?= $permission->id; ?>"
+                                            <?= in_array($permission->id, $permissionAssigned) ? 'checked' : ''; ?>
+                                        >
+                                        <label class="form-check-label" for="check-<?= $permission->id; ?>">
+                                            <?= $permission->name; ?>
+                                        </label>
+                                    </div>
+                                <?php endforeach ?>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <button type="submit" class="btn btn-primary btn-icon-split btn-sm">
+                <span class="icon text-white-50">
+                    <i class="fas fa-plus"></i>
+                </span>
+                <span class="text">Adicionar Permisssões</span>
+            </button>
+        <?= $this->Form->end() ?>
     </div>
 </div>

@@ -1,34 +1,33 @@
-<?php
-/**
- * @var \App\View\AppView $this
- * @var \App\Model\Entity\Role $role
- */
-?>
-<nav class="large-3 medium-4 columns" id="actions-sidebar">
-    <ul class="side-nav">
-        <li class="heading"><?= __('Actions') ?></li>
-        <li><?= $this->Form->postLink(
-                __('Delete'),
-                ['action' => 'delete', $role->id],
-                ['confirm' => __('Are you sure you want to delete # {0}?', $role->id)]
-            )
-        ?></li>
-        <li><?= $this->Html->link(__('List Roles'), ['action' => 'index']) ?></li>
-        <li><?= $this->Html->link(__('List Role Permission'), ['controller' => 'RolePermission', 'action' => 'index']) ?></li>
-        <li><?= $this->Html->link(__('New Role Permission'), ['controller' => 'RolePermission', 'action' => 'add']) ?></li>
-        <li><?= $this->Html->link(__('List Users'), ['controller' => 'Users', 'action' => 'index']) ?></li>
-        <li><?= $this->Html->link(__('New User'), ['controller' => 'Users', 'action' => 'add']) ?></li>
-    </ul>
-</nav>
-<div class="roles form large-9 medium-8 columns content">
+<?php $this->assign('pageTitle', 'Grupos'); ?>
+
+<div class="card border-left-primary">
+    <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+        <h6 class="m-0 font-weight-bold text-primary">
+            Atualizar Grupo
+        </h6>
+        <span class="pull-right">
+            <?= $this->Html->link(__('Voltar'), ['action' => 'index']); ?>
+        </span>
+    </div>
     <?= $this->Form->create($role) ?>
-    <fieldset>
-        <legend><?= __('Edit Role') ?></legend>
-        <?php
-            echo $this->Form->control('name');
-            echo $this->Form->control('description');
-        ?>
-    </fieldset>
-    <?= $this->Form->button(__('Submit')) ?>
-    <?= $this->Form->end() ?>
+        <div class="card-body">
+            <div class="row">
+                <div class="col-3">
+                    <div class="form-group">
+                        <?= $this->Form->control('name', ['class' => 'form-control', 'label' => 'Nome']); ?>
+                    </div>
+                </div>
+                <div class="col-9">
+                    <div class="form-group">
+                        <?= $this->Form->control('description', ['class' => 'form-control', 'label' => 'Conteúdo']); ?>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="card-footer">
+            <button type="submit" class="btn btn-primary">
+                <i class="fa fa-save"></i> Atualizar
+            </button>
+        </div>
+    <?= $this->Form->end(); ?>
 </div>

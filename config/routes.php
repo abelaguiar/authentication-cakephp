@@ -18,5 +18,11 @@ Router::scope('/', function (RouteBuilder $routes) {
     $routes->connect('/', ['controller' => 'Pages', 'action' => 'home']);
     $routes->connect('/home', ['controller' => 'Pages', 'action' => 'home']);
 
+    $routes->connect('/roles/:roleId/permissions', [
+        'controller' => 'Permissions', 'action' => 'index'
+    ])
+    ->setPatterns(['roleId' => '\d+'])
+    ->setPass(['roleId']);
+
     $routes->fallbacks(DashedRoute::class);
 });

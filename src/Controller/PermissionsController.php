@@ -1,106 +1,66 @@
 <?php
+
 namespace App\Controller;
 
+use Cake\ORM\TableRegistry;
 use App\Controller\AppController;
 
-/**
- * Permissions Controller
- *
- * @property \App\Model\Table\PermissionsTable $Permissions
- *
- * @method \App\Model\Entity\Permission[]|\Cake\Datasource\ResultSetInterface paginate($object = null, array $settings = [])
- */
 class PermissionsController extends AppController
 {
-    /**
-     * Index method
-     *
-     * @return \Cake\Http\Response|null
-     */
-    public function index()
+    public function initialize()
     {
-        $permissions = $this->paginate($this->Permissions);
-
-        $this->set(compact('permissions'));
+        $this->loadModel('Roles');
+        $this->loadModel('RolePermission');
     }
 
-    /**
-     * View method
-     *
-     * @param string|null $id Permission id.
-     * @return \Cake\Http\Response|null
-     * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
-     */
-    public function view($id = null)
+    public function index($roleId)
     {
-        $permission = $this->Permissions->get($id, [
-            'contain' => ['RolePermission', 'UserPermission']
-        ]);
+        $role = $this->Roles->get($roleId, ['contain' => 'RolePermission.Permissions']);
 
-        $this->set('permission', $permission);
-    }
+        $permissions = $this->Permissions->find('all');
 
-    /**
-     * Add method
-     *
-     * @return \Cake\Http\Response|null Redirects on successful add, renders view otherwise.
-     */
-    public function add()
-    {
-        $permission = $this->Permissions->newEntity();
-        if ($this->request->is('post')) {
-            $permission = $this->Permissions->patchEntity($permission, $this->request->getData());
-            if ($this->Permissions->save($permission)) {
-                $this->Flash->success(__('The permission has been saved.'));
+        $permissionAssigned = array_map(function ($item) {
+            return $item->permission->id;
+        }, $role->role_permission);
 
-                return $this->redirect(['action' => 'index']);
+        $groupsPermission = [];
+
+        foreach($permissions as $permission) {
+
+            if (strpos($permission->slug, 'post')) {
+
+                $groupsPermission['posts'][] = $permission;
             }
-            $this->Flash->error(__('The permission could not be saved. Please, try again.'));
-        }
-        $this->set(compact('permission'));
-    }
 
-    /**
-     * Edit method
-     *
-     * @param string|null $id Permission id.
-     * @return \Cake\Http\Response|null Redirects on successful edit, renders view otherwise.
-     * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
-     */
-    public function edit($id = null)
-    {
-        $permission = $this->Permissions->get($id, [
-            'contain' => []
-        ]);
-        if ($this->request->is(['patch', 'post', 'put'])) {
-            $permission = $this->Permissions->patchEntity($permission, $this->request->getData());
-            if ($this->Permissions->save($permission)) {
-                $this->Flash->success(__('The permission has been saved.'));
+            if (strpos($permission->slug, 'categor')) {
 
-                return $this->redirect(['action' => 'index']);
+                $groupsPermission['categories'][] = $permission;
             }
-            $this->Flash->error(__('The permission could not be saved. Please, try again.'));
-        }
-        $this->set(compact('permission'));
-    }
-
-    /**
-     * Delete method
-     *
-     * @param string|null $id Permission id.
-     * @return \Cake\Http\Response|null Redirects to index.
-     * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
-     */
-    public function delete($id = null)
-    {
-        $this->request->allowMethod(['post', 'delete']);
-        $permission = $this->Permissions->get($id);
-        if ($this->Permissions->delete($permission)) {
-            $this->Flash->success(__('The permission has been deleted.'));
-        } else {
-            $this->Flash->error(__('The permission could not be deleted. Please, try again.'));
         }
 
-        return $this->redirect(['action' => 'index']);
+        $rolePermission = $this->RolePermission->where('role_id', $role->id);
+
+        dd($rolePermission);
+
+        //$role = TableRegistry::get('RolePermission')->delete(['role_id', $role->id]);
+
+        if ($this->request->is('post') && !empty($this->request->getData())) {
+
+            $permissions = [];
+
+            foreach ($this->request->getData()['permissions'] as $permission) {
+
+                $permissions[] = ['role_id' => $role->id, 'permission_id' => $permission];
+            }
+
+            $rolePermission = $this->RolePermission->patchEntity(
+                $this->RolePermission->newEntity(), 
+                $permissions
+            );
+
+            $this->RolePermission->save($rolePermission);
+        }
+
+        $this->set(compact('role', 'groupsPermission', 'permissionAssigned'));
     }
 }

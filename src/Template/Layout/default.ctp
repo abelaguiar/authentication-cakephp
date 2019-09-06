@@ -75,11 +75,8 @@
                         <a class="collapse-item" href="<?= $this->Url->build(['controller' => 'Users', 'action' => 'index']); ?>">
                             Usuários
                         </a>
-                        <a class="collapse-item" href="">
+                        <a class="collapse-item" href="<?= $this->Url->build(['controller' => 'Roles', 'action' => 'index']); ?>">
                             Grupos
-                        </a>
-                        <a class="collapse-item" href="">
-                            Permissões
                         </a>
                     </div>
                 </div>

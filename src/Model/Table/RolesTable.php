@@ -22,8 +22,15 @@ class RolesTable extends Table
         $this->hasMany('RolePermission', [
             'foreignKey' => 'role_id'
         ]);
+
         $this->hasMany('Users', [
             'foreignKey' => 'role_id'
+        ]);
+
+        $this->belongsToMany('Permissions', [
+            'foreignKey' => 'permission_id',
+            'targetForeignKey' => 'role_id',
+            'joinTable' => 'role_permission',
         ]);
     }
 
