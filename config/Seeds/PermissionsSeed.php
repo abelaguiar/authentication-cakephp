@@ -74,13 +74,13 @@ class PermissionsSeed extends AbstractSeed
             ],
             [
                 'name' => 'Editar Categoria',
-                'slug' => 'editar-category',
+                'slug' => 'edit-category',
                 'created' => $this->getDateTime(),
                 'modified' => $this->getDateTime()
             ],
             [
                 'name' => 'Excluir Categoria',
-                'slug' => 'excluir-category',
+                'slug' => 'destroy-category',
                 'created' => $this->getDateTime(),
                 'modified' => $this->getDateTime()
             ],

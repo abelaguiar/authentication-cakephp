@@ -8,6 +8,8 @@ class PostsController extends AppController
 {
     public function index()
     {
+        $this->isAuthorizedPermission('list-post');
+
         $this->paginate = [
             'contain' => ['Categories']
         ];
@@ -19,6 +21,8 @@ class PostsController extends AppController
 
     public function view($id)
     {
+        $this->isAuthorizedPermission('list-post');
+
         $post = $this->Posts->get($id, [
             'contain' => ['Categories']
         ]);
@@ -28,6 +32,8 @@ class PostsController extends AppController
 
     public function add()
     {
+        $this->isAuthorizedPermission('create-post');
+
         $post = $this->Posts->newEntity();
 
         if ($this->request->is('post')) {
@@ -51,6 +57,8 @@ class PostsController extends AppController
 
     public function edit($id)
     {
+        $this->isAuthorizedPermission('edit-post');
+
         $post = $this->Posts->get($id);
 
         if ($this->request->is(['patch', 'post', 'put'])) {
@@ -74,6 +82,8 @@ class PostsController extends AppController
 
     public function delete($id)
     {
+        $this->isAuthorizedPermission('destroy-post');
+
         $this->request->allowMethod(['post', 'delete']);
 
         $post = $this->Posts->get($id);

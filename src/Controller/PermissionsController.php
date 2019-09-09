@@ -9,9 +9,10 @@ class PermissionsController extends AppController
 {
     public function initialize()
     {
+        parent::initialize();
+
         $this->loadModel('Roles');
         $this->loadModel('RolePermission');
-        $this->loadComponent('Flash');
     }
 
     public function index($roleId)

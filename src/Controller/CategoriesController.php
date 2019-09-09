@@ -8,6 +8,8 @@ class CategoriesController extends AppController
 {
     public function index()
     {
+        $this->isAuthorizedPermission('list-category');
+
         $categories = $this->paginate($this->Categories);
 
         $this->set(compact('categories'));
@@ -15,6 +17,8 @@ class CategoriesController extends AppController
 
     public function view($id = null)
     {
+        $this->isAuthorizedPermission('list-category');
+    
         $category = $this->Categories->get($id, [
             'contain' => ['Posts']
         ]);
@@ -24,6 +28,8 @@ class CategoriesController extends AppController
 
     public function add()
     {
+        $this->isAuthorizedPermission('create-category');
+
         $category = $this->Categories->newEntity();
 
         if ($this->request->is('post')) {
@@ -45,6 +51,8 @@ class CategoriesController extends AppController
 
     public function edit($id = null)
     {
+        $this->isAuthorizedPermission('edit-category');
+
         $category = $this->Categories->get($id);
 
         if ($this->request->is(['patch', 'post', 'put'])) {
@@ -64,15 +72,10 @@ class CategoriesController extends AppController
         $this->set(compact('category'));
     }
 
-    /**
-     * Delete method
-     *
-     * @param string|null $id Category id.
-     * @return \Cake\Http\Response|null Redirects to index.
-     * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
-     */
     public function delete($id = null)
     {
+        $this->isAuthorizedPermission('destroy-category');
+
         $this->request->allowMethod(['post', 'delete']);
 
         $category = $this->Categories->get($id);

@@ -50,17 +50,29 @@ class AppController extends Controller
 
     public function isAuthorized($user = null)
     {
-        // Any registered user can access public functions
-        if (! $this->request->getParam('prefix')) {
+        if (! $this->request->getParam('prefix') && $this->Auth->user()) {
 
             return true;
         }
 
-        //Only admins can access admin functions
-        // if ($this->request->getParam('prefix') === 'admin') {
-        //     return (bool)($user['role'] === 'admin');
-        // }
-
         return false;
+    }
+
+    public function isAuthorizedPermission($permissionSlug)
+    {
+        $userId = $this->Auth->user()['id'];
+
+        $this->loadModel('Users');
+
+        $user = $this->Users->get($userId, ['contain' => 'Roles.RolePermission.Permissions']);
+
+        $permissions = array_map(function ($role_permission) {
+            return $role_permission->permission->slug;
+        }, $user->role->role_permission);
+
+        if (!in_array($permissionSlug, $permissions)) {
+            
+            return $this->redirect(['controller' => 'error', 'action' => 'notAuthorized']);
+        }
     }
 }
