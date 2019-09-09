@@ -12,14 +12,22 @@
     <div class="card-body">
         <div class="alert alert-primary">
             <i class="fa fa-info-circle"></i> Cada bloco de menu tem uma lista de itens.
+            <hr>
             <p>
                 <b>Obs:</b> 
                 Para tirar ou colocar permissões de um grupo, 
-                selecione os checkboxs que deseja aplicar a permissão, 
-                após isso, aperte em adicionar permissão, para assim aplicar as permissões.
+                selecione os checkboxs que deseja aplicar uma permissão, 
+                após isso, aperte em 
+                    <button class="btn btn-primary btn-icon-split btn-sm" disabled="disabled">
+                        <span class="icon text-white-50">
+                            <i class="fas fa-plus"></i>
+                        </span>
+                        <span class="text">Adicionar Permisssões</span>
+                    </button> 
+                para assim aplicar as permissões.
             </p>
         </div>
-        <?= $this->Form->create(null) ?>
+        <?= $this->Form->create(null, ['url' => "/roles/{$role->id}/permissions/save"]) ?>
             <div class="row">
                 <div class="col-md-4">
                     <div class="card shadow mb-4">

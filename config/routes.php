@@ -20,6 +20,16 @@ Router::scope('/', function (RouteBuilder $routes) {
 
     $routes->connect('/roles/:roleId/permissions', [
         'controller' => 'Permissions', 'action' => 'index'
+    ], [
+        '_name' => 'permissions.roles'
+    ])
+    ->setPatterns(['roleId' => '\d+'])
+    ->setPass(['roleId']);
+
+    $routes->connect('/roles/:roleId/permissions/save', [
+        'controller' => 'Permissions', 'action' => 'save'
+    ], [
+        '_name' => 'permissions.roles.save'
     ])
     ->setPatterns(['roleId' => '\d+'])
     ->setPass(['roleId']);
