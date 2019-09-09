@@ -17,6 +17,7 @@ class RolesSeed extends AbstractSeed
             $data = [
                 'id' => 1,
                 'name' => 'Administrador',
+                'is_admin' => 1,
                 'description' => 'Grupos de usuários administradores',
                 'created' => $datetime,
                 'modified' => $datetime

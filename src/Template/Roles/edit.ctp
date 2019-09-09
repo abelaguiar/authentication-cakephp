@@ -17,6 +17,13 @@
                         <?= $this->Form->control('name', ['class' => 'form-control', 'label' => 'Nome']); ?>
                     </div>
                 </div>
+                <div class="col-3" style="margin-top: 38px;">
+                    <div class="form-check">
+                        <?= $this->Form->control('is_admin', ['class' => 'form-check-input', 'label' => 'É Administrador ?']); ?>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
                 <div class="col-9">
                     <div class="form-group">
                         <?= $this->Form->control('description', ['class' => 'form-control', 'label' => 'Conteúdo']); ?>

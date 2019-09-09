@@ -8,6 +8,7 @@ class Role extends Entity
 {
     protected $_accessible = [
         'name' => true,
+        'is_admin' => true,
         'description' => true,
         'created' => true,
         'modified' => true,

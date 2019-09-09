@@ -14,9 +14,14 @@ class CreateRoles extends AbstractMigration
             'null' => false,
         ]);
 
+        $table->addColumn('is_admin', 'boolean', [
+            'default' => 0,
+            'null' => false,
+        ]);
+
         $table->addColumn('description', 'text', [
             'default' => null,
-            'null' => false,
+            'null' => true,
         ]);
 
         $table->addColumn('created', 'datetime', [

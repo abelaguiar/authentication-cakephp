@@ -31,7 +31,7 @@
                 </div>
                 <div class="col-3">
                     <div class="form-group">
-                        <?= $this->Form->control('confirm_password', ['class' => 'form-control', 'autocomplete' => 'off', 'label' => 'Confirmar Senha']); ?>
+                        <?= $this->Form->control('confirm_password', ['class' => 'form-control', 'type' => 'password', 'autocomplete' => 'off', 'label' => 'Confirmar Senha']); ?>
                     </div>
                 </div>
             </div>

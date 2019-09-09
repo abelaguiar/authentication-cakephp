@@ -64,15 +64,20 @@ class AppController extends Controller
 
         $this->loadModel('Users');
 
-        $user = $this->Users->get($userId, ['contain' => 'Roles.RolePermission.Permissions']);
+        $user = $this->Users->get($userId, [
+            'contain' => 'Roles.RolePermission.Permissions'
+        ]);
 
-        $permissions = array_map(function ($role_permission) {
-            return $role_permission->permission->slug;
-        }, $user->role->role_permission);
+        if (!$user->role->is_admin) {
 
-        if (!in_array($permissionSlug, $permissions)) {
-            
-            return $this->redirect(['controller' => 'error', 'action' => 'notAuthorized']);
+            $permissions = array_map(function ($role_permission) {
+                return $role_permission->permission->slug;
+            }, $user->role->role_permission);
+
+            if (!in_array($permissionSlug, $permissions)) {
+
+                return $this->redirect(['controller' => 'error', 'action' => 'notAuthorized']);
+            }
         }
     }
 }
