@@ -22,6 +22,24 @@
                         <?= $this->Form->control('email', ['class' => 'form-control']); ?>
                     </div>
                 </div>
+                <div class="col-3">
+                    <div class="form-group">
+                        <?= $this->Form->control('role_id', ['class' => 'form-control', 'dropdown' => $roles]); ?>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-3">
+                    <div class="form-group">
+                        <label for="password">Senha</label>
+                        <input type="password" name="password" class="form-control" autocomplete="off" id="password">
+                    </div>
+                </div>
+                <div class="col-3">
+                    <div class="form-group">
+                        <?= $this->Form->control('confirm_password', ['class' => 'form-control', 'type' => 'password', 'autocomplete' => 'off', 'label' => 'Confirmar Senha']); ?>
+                    </div>
+                </div>
             </div>
         </div>
         <div class="card-footer">

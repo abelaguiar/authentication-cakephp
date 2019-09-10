@@ -22,6 +22,11 @@
                         <?= $this->Form->control('email', ['class' => 'form-control']); ?>
                     </div>
                 </div>
+                <div class="col-3">
+                    <div class="form-group">
+                        <?= $this->Form->control('role_id', ['class' => 'form-control', 'dropdown' => $roles]); ?>
+                    </div>
+                </div>
             </div>
             <div class="row">
                 <div class="col-3">

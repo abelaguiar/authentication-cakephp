@@ -3,9 +3,17 @@
 namespace App\Controller;
 
 use App\Controller\AppController;
+use Cake\Auth\DefaultPasswordHasher;
 
 class UsersController extends AppController
 {
+    public function initialize()
+    {
+        parent::initialize();
+
+        $this->loadModel('Roles');
+    }
+
     public function login()
     {
         if ($this->request->is('post')) {
@@ -61,9 +69,20 @@ class UsersController extends AppController
     {
         $user = $this->Users->newEntity();
 
+        $roles = $this->Roles->find('list');
+
         if ($this->request->is('post')) {
 
+            if ($this->request->getData()['password'] != $this->request->getData()['confirm_password']) {
+
+                $this->Flash->success(__('Senhas não coincidem.'));
+
+                return $this->redirect(['action' => 'index']);
+            }
+
             $user = $this->Users->patchEntity($user, $this->request->getData());
+
+            $user->password = (new DefaultPasswordHasher)->hash($user->password);
 
             if ($this->Users->save($user)) {
 
@@ -75,7 +94,7 @@ class UsersController extends AppController
             $this->Flash->error(__('The user could not be saved. Please, try again.'));
         }
 
-        $this->set(compact('user'));
+        $this->set(compact('user', 'roles'));
     }
 
     /**
@@ -89,9 +108,29 @@ class UsersController extends AppController
     {
         $user = $this->Users->get($id);
 
+        $roles = $this->Roles->find('list');
+
         if ($this->request->is(['patch', 'post', 'put'])) {
 
-            $user = $this->Users->patchEntity($user, $this->request->getData());
+            $requestData = $this->request->getData();
+
+            if (empty($requestData['password'])) {
+
+                unset($requestData['password']);
+
+            } else {
+
+                if ($this->request->getData()['password'] != $this->request->getData()['confirm_password']) {
+
+                    $this->Flash->success(__('Senhas não coincidem.'));
+    
+                    return $this->redirect(['action' => 'index']);
+                }
+    
+                $requestData['password'] = (new DefaultPasswordHasher)->hash($requestData['password']);
+            }
+
+            $user = $this->Users->patchEntity($user, $requestData);
 
             if ($this->Users->save($user)) {
 
@@ -103,7 +142,7 @@ class UsersController extends AppController
             $this->Flash->error(__('The user could not be saved. Please, try again.'));
         }
 
-        $this->set(compact('user'));
+        $this->set(compact('user', 'roles'));
     }
 
     public function delete($id = null)
