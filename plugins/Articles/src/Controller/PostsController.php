@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Controller;
+namespace Articles\Controller;
 
-use App\Controller\AppController;
+use Articles\Controller\AppController;
 
 class PostsController extends AppController
 {

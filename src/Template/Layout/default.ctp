@@ -54,10 +54,10 @@
                 <div id="blog" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
                         <h6 class="collapse-header">Opções</h6>
-                        <a class="collapse-item" href="<?= $this->Url->build(['controller' => 'Posts', 'action' => 'index']); ?>">
+                        <a class="collapse-item" href="/articles/posts">
                             Posts
                         </a>
-                        <a class="collapse-item" href="<?= $this->Url->build(['controller' => 'Categories', 'action' => 'index']); ?>">
+                        <a class="collapse-item" href="/articles/categories">
                             Categorias
                         </a>
                     </div>
@@ -72,10 +72,10 @@
                 <div id="settings" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
                         <h6 class="collapse-header">Opções</h6>
-                        <a class="collapse-item" href="<?= $this->Url->build(['controller' => 'Users', 'action' => 'index']); ?>">
+                        <a class="collapse-item" href="/users">
                             Usuários
                         </a>
-                        <a class="collapse-item" href="<?= $this->Url->build(['controller' => 'Roles', 'action' => 'index']); ?>">
+                        <a class="collapse-item" href="/roles">
                             Grupos
                         </a>
                     </div>

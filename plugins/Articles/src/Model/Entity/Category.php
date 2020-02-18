@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Model\Entity;
+namespace Articles\Model\Entity;
 
 use Cake\ORM\Entity;
 
